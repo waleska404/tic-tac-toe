@@ -1,6 +1,9 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("com.google.dagger.hilt.android")
+    id("kotlin-kapt")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -47,6 +50,9 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+    kotlin {
+        jvmToolchain(8)
+    }
 }
 
 dependencies {
@@ -66,4 +72,17 @@ dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
+
+    //DaggerHilt
+    implementation("com.google.dagger:hilt-android:2.46.1")
+    implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
+    kapt("com.google.dagger:hilt-compiler:2.44")
+
+    //Navigation
+    implementation("androidx.navigation:navigation-compose:2.7.4")
+    androidTestImplementation("androidx.navigation:navigation-testing:2.7.4")
+
+    //Firebase
+    implementation(platform("com.google.firebase:firebase-bom:31.4.0"))
+    implementation("com.google.firebase:firebase-database-ktx")
 }
