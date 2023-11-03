@@ -29,9 +29,10 @@ fun HomeScreen(
             onCreateGame = { homeViewModel.onCreateGame() }
         )
         Spacer(modifier = Modifier.weight(1f))
-        Divider(modifier = Modifier
-            .fillMaxWidth()
-            .height(2.dp)
+        Divider(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(2.dp)
         )
         Spacer(modifier = Modifier.weight(1f))
         JoinGame(
@@ -57,7 +58,7 @@ fun JoinGame(
 ) {
     var text by remember { mutableStateOf("") }
 
-    TextField(value = text, onValueChange = {text = it})
+    TextField(value = text, onValueChange = { text = it })
 
     Button(
         onClick = { onJoinGame(text) },
