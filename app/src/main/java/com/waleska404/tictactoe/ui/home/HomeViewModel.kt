@@ -1,5 +1,6 @@
 package com.waleska404.tictactoe.ui.home
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.waleska404.tictactoe.data.network.FirebaseService
 import com.waleska404.tictactoe.data.network.model.GameData
