@@ -2,6 +2,7 @@ package com.waleska404.tictactoe.ui.game
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -19,6 +20,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.waleska404.tictactoe.ui.model.GameUIModel
+import com.waleska404.tictactoe.ui.model.PlayerType
 
 @Composable
 fun GameScreen(
@@ -33,19 +35,30 @@ fun GameScreen(
 
     val game: GameUIModel? by gameViewModel.game.collectAsState()
 
-    Board(game)
+    Board(
+        game = game,
+        onCellClicked = { position -> gameViewModel.onCellClicked(position) },
+    )
 }
 
 @Composable
-fun Board(game: GameUIModel?) {
+fun Board(
+    game: GameUIModel?,
+    onCellClicked: (Int) -> Unit,
+) {
+    if (game == null) return
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Text(text = game?.gameId.orEmpty())
+        Text(text = game.gameId)
 
-        val status = if(game?.isGameReady == true) {
-            "Es tu turno/Turno rival"
+        val status = if (game.isGameReady) {
+            if (game.isMyTurn) {
+                "Your turn"
+            } else {
+                "Opponent's turn"
+            }
         } else {
             "Esperando Jugador 2"
         }
@@ -53,32 +66,36 @@ fun Board(game: GameUIModel?) {
         Text(text = status)
 
         Row {
-            GameItem()
-            GameItem()
-            GameItem()
+            GameItem(game.board[0]) { onCellClicked(0) }
+            GameItem(game.board[1]) { onCellClicked(1) }
+            GameItem(game.board[2]) { onCellClicked(2) }
         }
         Row {
-            GameItem()
-            GameItem()
-            GameItem()
+            GameItem(game.board[3]) { onCellClicked(3) }
+            GameItem(game.board[4]) { onCellClicked(4) }
+            GameItem(game.board[5]) { onCellClicked(5) }
         }
         Row {
-            GameItem()
-            GameItem()
-            GameItem()
+            GameItem(game.board[6]) { onCellClicked(6) }
+            GameItem(game.board[7]) { onCellClicked(7) }
+            GameItem(game.board[8]) { onCellClicked(8) }
         }
     }
 }
 
 @Composable
-fun GameItem() {
+fun GameItem(
+    playerType: PlayerType,
+    onCellClicked: () -> Unit,
+) {
     Box(
         modifier = Modifier
             .padding(12.dp)
             .size(64.dp)
-            .border(BorderStroke(2.dp, Color.Black)),
+            .border(BorderStroke(2.dp, Color.Black))
+            .clickable { onCellClicked() },
         contentAlignment = Alignment.Center
     ) {
-        Text(text = "X")
+        Text(text = playerType.symbol)
     }
 }

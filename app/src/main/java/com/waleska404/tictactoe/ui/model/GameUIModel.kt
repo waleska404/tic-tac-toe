@@ -9,7 +9,8 @@ data class GameUIModel(
     val player2: PlayerUIModel?,
     val playerTurn: PlayerUIModel,
     val gameId: String,
-    val isGameReady: Boolean = false
+    val isGameReady: Boolean = false,
+    val isMyTurn: Boolean = false
 ) {
     fun toDataModel(): GameData {
         return GameData(
