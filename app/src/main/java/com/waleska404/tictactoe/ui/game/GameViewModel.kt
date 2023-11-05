@@ -1,11 +1,12 @@
 package com.waleska404.tictactoe.ui.game
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.waleska404.tictactoe.data.network.FirebaseService
+import com.waleska404.tictactoe.ui.model.GameUIModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -15,6 +16,9 @@ class GameViewModel @Inject constructor(
 ) : ViewModel() {
 
     private lateinit var userId: String
+
+    private var  _game = MutableStateFlow<GameUIModel?>(null)
+    val game: StateFlow<GameUIModel?> = _game
 
     fun joinToGame(gameId: String, userId: String, owner: Boolean) {
         this.userId = userId
@@ -28,7 +32,7 @@ class GameViewModel @Inject constructor(
     private fun joinGameAsOwner(gameId: String) {
         viewModelScope.launch {
             firebaseService.joinToGame(gameId).collect { gameInfo ->
-                Log.i("MYTAG", gameInfo.toString())
+                _game.value = gameInfo
             }
         }
     }

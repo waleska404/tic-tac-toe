@@ -1,6 +1,5 @@
 package com.waleska404.tictactoe.ui.game
 
-import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
@@ -12,11 +11,14 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.waleska404.tictactoe.ui.model.GameUIModel
 
 @Composable
 fun GameScreen(
@@ -29,16 +31,18 @@ fun GameScreen(
         gameViewModel.joinToGame(gameId, userId, owner)
     }
 
-    Board()
+    val game: GameUIModel? by gameViewModel.game.collectAsState()
+
+    Board(game)
 }
 
 @Composable
-fun Board() {
+fun Board(game: GameUIModel?) {
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Text(text = "IdPartida")
+        Text(text = game?.gameId.orEmpty())
         Text(text = "Es tu turno/Esperando Rival/Turno rival")
 
         Row {
