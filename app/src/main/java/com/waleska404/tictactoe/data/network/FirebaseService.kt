@@ -29,4 +29,11 @@ class FirebaseService @Inject constructor(
             dataSnapshot.getValue(GameData::class.java)?.toUIModel()
         }
     }
+
+    fun updateGame(gameData: GameData) {
+        if(gameData.gameId != null) {
+            Log.i("MYTAG", "updateGame: $gameData")
+            reference.child(PATH).child(gameData.gameId).setValue(gameData)
+        }
+    }
 }

@@ -43,7 +43,14 @@ fun Board(game: GameUIModel?) {
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Text(text = game?.gameId.orEmpty())
-        Text(text = "Es tu turno/Esperando Rival/Turno rival")
+
+        val status = if(game?.isGameReady == true) {
+            "Es tu turno/Turno rival"
+        } else {
+            "Esperando Jugador 2"
+        }
+
+        Text(text = status)
 
         Row {
             GameItem()
