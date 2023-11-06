@@ -34,11 +34,23 @@ fun GameScreen(
     }
 
     val game: GameUIModel? by gameViewModel.game.collectAsState()
+    val winner: PlayerType? by gameViewModel.winner.collectAsState()
 
-    Board(
-        game = game,
-        onCellClicked = { position -> gameViewModel.onCellClicked(position) },
-    )
+    if(winner != null) {
+        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            val currentWinner = if(winner == PlayerType.FirstPlayer) {
+                "player 1"
+            } else {
+                "player 2"
+            }
+            Text(text = "Ha ganado el jugador: $currentWinner")
+        }
+    } else {
+        Board(
+            game = game,
+            onCellClicked = { position -> gameViewModel.onCellClicked(position) },
+        )
+    }
 }
 
 @Composable
