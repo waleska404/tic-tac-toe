@@ -66,11 +66,11 @@ fun HomeScreen(
 @Composable
 fun Header() {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
-        Spacer(modifier = Modifier.height(24.dp))
+        Spacer(modifier = Modifier.height(50.dp))
         // logo
         Box(
             modifier = Modifier
-                .size(224.dp)
+                .size(200.dp)
                 .padding(12.dp)
                 .clip(RoundedCornerShape(24.dp)),
             contentAlignment = Alignment.Center
@@ -80,7 +80,6 @@ fun Header() {
                 contentDescription = "tic tac toe app logo",
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(24.dp)
             )
         }
 
@@ -99,6 +98,7 @@ fun Body(
     onCreateGame: () -> Unit,
     onJoinGame: (String) -> Unit,
 ) {
+    Spacer(modifier = Modifier.height(50.dp))
     Card(
         modifier = Modifier
             .fillMaxWidth()
