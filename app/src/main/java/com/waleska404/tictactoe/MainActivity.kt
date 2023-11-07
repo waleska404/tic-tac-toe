@@ -23,7 +23,7 @@ class MainActivity : ComponentActivity() {
             TicTacToeTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
+                    color = MaterialTheme.colorScheme.background,
                 ) {
                     navigationController = rememberNavController()
                     ContentWrapper(navigationController = navigationController)
