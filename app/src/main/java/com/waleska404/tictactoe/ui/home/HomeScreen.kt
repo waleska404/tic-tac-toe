@@ -181,12 +181,13 @@ fun JoinGame(
             onClick = { onJoinGame(text) },
             enabled = text.isNotEmpty(),
             colors = ButtonDefaults.buttonColors(
-                containerColor = PrimaryGrey
+                containerColor = PrimaryGrey,
+                disabledContainerColor = PrimaryGrey
             )
         ) {
             Text(
                 text = "Join Game",
-                color = PrimaryBlack,
+                color = if(text.isNotEmpty()) PrimaryBlack else LightGrey,
                 fontSize = 18.sp
             )
         }
