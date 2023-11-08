@@ -1,5 +1,6 @@
 package com.waleska404.tictactoe.ui.game
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.waleska404.tictactoe.data.network.FirebaseService
@@ -42,6 +43,9 @@ class GameViewModel @Inject constructor(
                     val result =
                         gameInfo.copy(player2 = PlayerUIModel(userId, PlayerType.SecondPlayer))
                     firebaseService.updateGame(result.toDataModel())
+                } else {
+                    // show error and navigate to home screen
+                    Log.e("MYTAG", "GAME INFO WAS NUL!!")
                 }
             }
             joinGame(gameId)

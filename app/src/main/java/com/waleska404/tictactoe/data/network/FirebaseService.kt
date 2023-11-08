@@ -1,6 +1,5 @@
 package com.waleska404.tictactoe.data.network
 
-import android.util.Log
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.snapshots
 import com.waleska404.tictactoe.data.network.model.GameData
@@ -32,7 +31,6 @@ class FirebaseService @Inject constructor(
 
     fun updateGame(gameData: GameData) {
         if(gameData.gameId != null) {
-            Log.i("MYTAG", "updateGame: $gameData")
             reference.child(PATH).child(gameData.gameId).setValue(gameData)
         }
     }
