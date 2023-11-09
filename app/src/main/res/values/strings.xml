@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">TicTacToe</string>
+    <string name="app_title">Tic Tac Toe</string>
+    <string name="logo_content_description">tic tac toe app logo</string>
+    <string name="create_game">Create Game</string>
+    <string name="join_game">Join Game</string>
+    <string name="congratulations">Congratulations!</string>
+    <string name="player_1">Player 1</string>
+    <string name="player_2">Player 2</string>
+    <string name="winner_is">The winner is:</string>
+    <string name="go_to_home_screen">Go to home screen</string>
+    <string name="copied_to_clipboard">Copied to clipboard</string>
+    <string name="your_turn">Your Turn</string>
+    <string name="opponents_turn">Opponent\'s Turn</string>
+    <string name="waiting_player_2">Waiting for player 2</string>
 </resources>

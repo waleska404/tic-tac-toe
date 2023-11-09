@@ -32,11 +32,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ClipboardManager
 import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.waleska404.tictactoe.R
 import com.waleska404.tictactoe.ui.model.GameUIModel
 import com.waleska404.tictactoe.ui.model.PlayerType
 import com.waleska404.tictactoe.ui.theme.Background
@@ -61,56 +63,76 @@ fun GameScreen(
     val winner: PlayerType? by gameViewModel.winner.collectAsState()
 
     if (winner != null) {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(Background),
-            contentAlignment = Alignment.Center,
-        ) {
-            Card(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .wrapContentHeight()
-                    .padding(24.dp),
-                colors = CardDefaults.cardColors(
-                    containerColor = PrimaryGrey,
-                )
-            ) {
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    modifier = Modifier.padding(24.dp)
-                ) {
-                    Text(text = "¡FELICIDADES!", color = PrimaryBlack, fontSize = 28.sp, fontWeight = FontWeight.Bold)
-                    Spacer(modifier = Modifier.height(8.dp))
-                    val currentWinner = if (winner == PlayerType.FirstPlayer) {
-                        "player 1"
-                    } else {
-                        "player 2"
-                    }
-                    Text(text = "Ha ganado el jugador:", fontSize = 22.sp, color = PrimaryBlack)
-                    Spacer(modifier = Modifier.height(2.dp))
-                    Text(text = currentWinner, fontSize = 26.sp, color = PrimaryBlack, fontWeight = FontWeight.Bold)
-                    Spacer(modifier = Modifier.height(32.dp))
-                    Button(
-                        onClick = { navigateToHome() },
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = PrimaryGrey,
-                        ),
-                    ) {
-                        Text(
-                            text = "Back Home",
-                            color = PrimaryBlack,
-                            fontSize = 18.sp
-                        )
-                    }
-                }
-            }
-        }
+        WinnerView(
+            winner = winner,
+            navigateToHome = navigateToHome
+        )
     } else {
         Board(
             game = game,
             onCellClicked = { position -> gameViewModel.onCellClicked(position) },
         )
+    }
+}
+
+@Composable
+fun WinnerView(
+    winner: PlayerType?,
+    navigateToHome: () -> Unit,
+) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Background),
+        contentAlignment = Alignment.Center,
+    ) {
+        Card(
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentHeight()
+                .padding(24.dp),
+            colors = CardDefaults.cardColors(
+                containerColor = PrimaryGrey,
+            )
+        ) {
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier.padding(24.dp)
+            ) {
+                Text(
+                    text = stringResource(id = R.string.congratulations), 
+                    color = PrimaryBlack, 
+                    fontSize = 28.sp, 
+                    fontWeight = FontWeight.Bold
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                val currentWinner = if (winner == PlayerType.FirstPlayer) {
+                    stringResource(id = R.string.player_1)
+                } else {
+                    stringResource(id = R.string.player_2)
+                }
+                Text(
+                    text = stringResource(id = R.string.winner_is), 
+                    fontSize = 22.sp, 
+                    color = PrimaryBlack
+                )
+                Spacer(modifier = Modifier.height(2.dp))
+                Text(text = currentWinner, fontSize = 26.sp, color = PrimaryBlack, fontWeight = FontWeight.Bold)
+                Spacer(modifier = Modifier.height(32.dp))
+                Button(
+                    onClick = { navigateToHome() },
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = PrimaryGrey,
+                    ),
+                ) {
+                    Text(
+                        text = stringResource(id = R.string.go_to_home_screen),
+                        color = PrimaryBlack,
+                        fontSize = 18.sp
+                    )
+                }
+            }
+        }
     }
 }
 
@@ -130,6 +152,7 @@ fun Board(
             .background(Background),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
+        val toastText = stringResource(id = R.string.copied_to_clipboard)
         Text(
             text = game.gameId,
             color = BlueLink,
@@ -138,19 +161,19 @@ fun Board(
                 .clickable {
                     clipboard.setText(AnnotatedString(game.gameId))
                     Toast
-                        .makeText(context, "Copiado", Toast.LENGTH_SHORT)
+                        .makeText(context, toastText, Toast.LENGTH_SHORT)
                         .show()
                 }
         )
 
         val status = if (game.isGameReady) {
             if (game.isMyTurn) {
-                "Your turn"
+                stringResource(id = R.string.your_turn)
             } else {
-                "Opponent's turn"
+                stringResource(id = R.string.opponents_turn)
             }
         } else {
-            "Esperando Jugador 2"
+            stringResource(id = R.string.waiting_player_2)
         }
 
         Row(verticalAlignment = Alignment.CenterVertically) {

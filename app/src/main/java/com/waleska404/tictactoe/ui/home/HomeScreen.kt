@@ -33,11 +33,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.waleska404.tictactoe.R
+import com.waleska404.tictactoe.ui.core.components.TicTacPrimaryButton
 import com.waleska404.tictactoe.ui.theme.Background
 import com.waleska404.tictactoe.ui.theme.LightGrey
 import com.waleska404.tictactoe.ui.theme.PrimaryBlack
@@ -77,7 +79,7 @@ fun Header() {
         ) {
             Image(
                 painter = painterResource(id = R.drawable.logo),
-                contentDescription = "tic tac toe app logo",
+                contentDescription = stringResource(id = R.string.logo_content_description),
                 modifier = Modifier
                     .fillMaxSize()
             )
@@ -85,7 +87,7 @@ fun Header() {
 
         // title
         Text(
-            text = "Tic Tac Toe",
+            text = stringResource(id = R.string.app_name),
             fontSize = 32.sp,
             color = PrimaryBlack,
             fontWeight = FontWeight.Bold,
@@ -140,18 +142,10 @@ fun Body(
 fun CreateGame(
     onCreateGame: () -> Unit,
 ) {
-    Button(
+    TicTacPrimaryButton(
         onClick = { onCreateGame() },
-        colors = ButtonDefaults.buttonColors(
-            containerColor = PrimaryGrey,
-        ),
-    ) {
-        Text(
-            text = "Create Game",
-            color = PrimaryBlack,
-            fontSize = 18.sp
-        )
-    }
+        text = stringResource(id = R.string.create_game)
+    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -186,7 +180,7 @@ fun JoinGame(
             )
         ) {
             Text(
-                text = "Join Game",
+                text = stringResource(id = R.string.join_game),
                 color = if(text.isNotEmpty()) PrimaryBlack else LightGrey,
                 fontSize = 18.sp
             )
