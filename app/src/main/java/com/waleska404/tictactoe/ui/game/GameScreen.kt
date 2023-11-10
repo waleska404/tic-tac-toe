@@ -19,6 +19,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -26,6 +27,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -65,8 +67,13 @@ fun GameScreen(
 
     val game: GameUIModel? by gameViewModel.game.collectAsState()
     val winner: PlayerType? by gameViewModel.winner.collectAsState()
+    val invalidGameID: Boolean by gameViewModel.invalidGameId.collectAsState()
 
     //TODO: empate view
+
+    if(invalidGameID) {
+        InvalidGameIDDialog()
+    }
 
     if (winner != null) {
         WinnerView(
@@ -80,6 +87,22 @@ fun GameScreen(
             myPlayerType = { gameViewModel.getMyPlayerType() }
         )
     }
+}
+
+@Composable
+fun InvalidGameIDDialog() {
+    AlertDialog(
+        onDismissRequest = { /*TODO*/ },
+        confirmButton = {
+            TextButton(
+                onClick = { /*TODO*/ },
+            ) {
+                Text(text = "confirm button")
+            }
+        },
+        title = { Text(text = "invalid game id") },
+        text = { Text(text = "return home") },
+        )
 }
 
 @Composable

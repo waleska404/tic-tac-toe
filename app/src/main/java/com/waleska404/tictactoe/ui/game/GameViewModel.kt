@@ -19,6 +19,8 @@ class GameViewModel @Inject constructor(
     private val firebaseService: FirebaseService
 ) : ViewModel() {
 
+    //TODO: TAG PARA LOS LOGS?
+
     private lateinit var userId: String
 
     private var _game = MutableStateFlow<GameUIModel?>(null)
@@ -26,6 +28,9 @@ class GameViewModel @Inject constructor(
 
     private var _winner = MutableStateFlow<PlayerType?>(null)
     val winner: StateFlow<PlayerType?> = _winner
+
+    private var _invalidGameId = MutableStateFlow(false)
+    val invalidGameId: StateFlow<Boolean> = _invalidGameId
 
     fun joinToGame(gameId: String, userId: String, owner: Boolean) {
         this.userId = userId
@@ -46,8 +51,9 @@ class GameViewModel @Inject constructor(
                         gameInfo.copy(player2 = PlayerUIModel(userId, PlayerType.SecondPlayer))
                     firebaseService.updateGame(result.toDataModel())
                 } else {
-                    // show error and navigate to home screen
-                    Log.e("MYTAG", "GAME INFO WAS NUL!!")
+                    _invalidGameId.value = true
+                    // TODO: correct tag para los logs
+                    Log.e("MYTAG", "GAME INFO WAS NULL! INVALID GAME ID!")
                 }
             }
             joinGame(gameId)

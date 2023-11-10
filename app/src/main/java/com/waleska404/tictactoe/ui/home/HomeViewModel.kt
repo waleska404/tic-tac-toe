@@ -1,13 +1,10 @@
 package com.waleska404.tictactoe.ui.home
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.waleska404.tictactoe.data.network.FirebaseService
 import com.waleska404.tictactoe.data.network.model.GameData
 import com.waleska404.tictactoe.data.network.model.PlayerData
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.take
-import kotlinx.coroutines.launch
 import java.util.Calendar
 import javax.inject.Inject
 
@@ -29,25 +26,6 @@ class HomeViewModel @Inject constructor(
     fun onJoinGame(gameId: String, navigateToGame: (String, String, Boolean) -> Unit) {
         val owner = false
         navigateToGame(gameId, createUserId(), owner)
-        /*
-        if (validGameId(gameId)) {
-            navigateToGame(gameId, createUserId(), owner)
-        } else {
-            //TODO: show error invalid game id
-            Log.i("MYTAG HOME VIEW MODEL", "INVALID GAME ID")
-        }*/
-    }
-
-    private fun validGameId(gameId: String): Boolean {
-        var isValid = false
-        viewModelScope.launch {
-            firebaseService.joinToGame(gameId).take(1).collect { gameInfo ->
-                if (gameInfo != null) {
-                    isValid = true
-                }
-            }
-        }
-        return isValid
     }
 
     private fun createUserId(): String {
