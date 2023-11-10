@@ -20,7 +20,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -45,6 +44,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.waleska404.tictactoe.R
+import com.waleska404.tictactoe.ui.core.components.TicTacPrimaryButton
 import com.waleska404.tictactoe.ui.model.GameUIModel
 import com.waleska404.tictactoe.ui.model.PlayerType
 import com.waleska404.tictactoe.ui.theme.Background
@@ -142,43 +142,39 @@ fun WinnerView(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier.padding(24.dp)
             ) {
+                val congratulationsText = if(winner == PlayerType.Empty) {
+                    stringResource(id = R.string.draw)
+                } else {
+                    stringResource(id = R.string.congratulations)
+                }
                 Text(
-                    text = stringResource(id = R.string.congratulations),
+                    text = congratulationsText,
                     color = PrimaryBlack,
                     fontSize = 28.sp,
                     fontWeight = FontWeight.Bold
                 )
-                Spacer(modifier = Modifier.height(8.dp))
-                val currentWinner = if (winner == PlayerType.FirstPlayer) {
-                    stringResource(id = R.string.player_1)
-                } else {
-                    stringResource(id = R.string.player_2)
-                }
-                Text(
-                    text = stringResource(id = R.string.winner_is),
-                    fontSize = 22.sp,
-                    color = PrimaryBlack
-                )
-                Spacer(modifier = Modifier.height(2.dp))
-                Text(
-                    text = currentWinner,
-                    fontSize = 26.sp,
-                    color = PrimaryBlack,
-                    fontWeight = FontWeight.Bold
-                )
-                Spacer(modifier = Modifier.height(32.dp))
-                Button(
-                    onClick = { navigateToHome() },
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = PrimaryGrey,
-                    ),
-                ) {
+                if(winner != PlayerType.Empty) {
+                    Spacer(modifier = Modifier.height(8.dp))
+                    val currentWinner = if (winner == PlayerType.FirstPlayer) {
+                        stringResource(id = R.string.player_1)
+                    } else {
+                        stringResource(id = R.string.player_2)
+                    }
                     Text(
-                        text = stringResource(id = R.string.go_to_home_screen),
+                        text = stringResource(id = R.string.winner_is),
+                        fontSize = 22.sp,
+                        color = PrimaryBlack
+                    )
+                    Spacer(modifier = Modifier.height(2.dp))
+                    Text(
+                        text = currentWinner,
+                        fontSize = 26.sp,
                         color = PrimaryBlack,
-                        fontSize = 18.sp
+                        fontWeight = FontWeight.Bold
                     )
                 }
+                Spacer(modifier = Modifier.height(32.dp))
+                TicTacPrimaryButton(onClick = { navigateToHome() }, text = stringResource(id = R.string.go_to_home_screen))
             }
         }
     }

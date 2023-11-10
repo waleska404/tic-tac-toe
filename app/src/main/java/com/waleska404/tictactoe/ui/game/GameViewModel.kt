@@ -102,6 +102,12 @@ class GameViewModel @Inject constructor(
                 playerWon(board, PlayerType.SecondPlayer) -> {
                     _winner.value = PlayerType.SecondPlayer
                 }
+                else -> {
+                    val boardComplete = board.count { it == PlayerType.FirstPlayer || it == PlayerType.SecondPlayer } == 9
+                    if(boardComplete) {
+                        _winner.value = PlayerType.Empty
+                    }
+                }
             }
         }
     }

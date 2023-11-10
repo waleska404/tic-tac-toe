@@ -16,4 +16,5 @@
     <string name="copy_content_description">copy to clipboard icon</string>
     <string name="info_content_description">info icon</string>
     <string name="invalid_game_id">Invalid Game ID</string>
+    <string name="draw">It\'s a draw!</string>
 </resources>
