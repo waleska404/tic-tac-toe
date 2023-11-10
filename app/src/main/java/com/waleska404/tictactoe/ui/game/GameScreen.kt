@@ -68,8 +68,6 @@ fun GameScreen(
     val winner: PlayerType? by gameViewModel.winner.collectAsState()
     val invalidGameID: Boolean by gameViewModel.invalidGameId.collectAsState()
 
-    //TODO: empate view
-
     if (invalidGameID) {
         InvalidGameIDDialog(navigateToHome)
     }
@@ -109,7 +107,8 @@ fun InvalidGameIDDialog(
         title = {
             Text(
                 text = stringResource(id = R.string.invalid_game_id),
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
+                color = PrimaryBlack
             )
 
         },
@@ -264,7 +263,6 @@ fun ClickableGameID(
     val clipboard: ClipboardManager = LocalClipboardManager.current
     val context = LocalContext.current
     val toastText = stringResource(id = R.string.copied_to_clipboard)
-    // TODO: toast showing android icon?? on nexus 5
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
