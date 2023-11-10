@@ -13,8 +13,6 @@ class HomeViewModel @Inject constructor(
     private val firebaseService: FirebaseService
 ) : ViewModel() {
 
-    //TODO: variable TAG para los logs??
-
     fun onCreateGame(navigateToGame: (String, String, Boolean) -> Unit) {
         val game = createNewGame()
         val gameId = firebaseService.createGame(game)

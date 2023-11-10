@@ -40,8 +40,8 @@ sealed class PlayerType(
     val id: Int,
     val symbol: String
 ) {
-    object FirstPlayer : PlayerType(2, "X")
-    object SecondPlayer : PlayerType(3, "O")
+    object FirstPlayer : PlayerType(1, "X")
+    object SecondPlayer : PlayerType(2, "O")
     object Empty : PlayerType(0, "")
 
     companion object {

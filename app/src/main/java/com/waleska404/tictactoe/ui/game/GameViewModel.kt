@@ -19,8 +19,6 @@ class GameViewModel @Inject constructor(
     private val firebaseService: FirebaseService
 ) : ViewModel() {
 
-    //TODO: TAG PARA LOS LOGS?
-
     private lateinit var userId: String
 
     private var _game = MutableStateFlow<GameUIModel?>(null)
@@ -41,8 +39,6 @@ class GameViewModel @Inject constructor(
         }
     }
 
-    //TODO: solucionar lo de el playertype 0 al principio
-
     private fun joinGameAsGuest(gameId: String) {
         viewModelScope.launch {
             firebaseService.joinToGame(gameId).take(1).collect { gameInfo ->
@@ -52,8 +48,7 @@ class GameViewModel @Inject constructor(
                     firebaseService.updateGame(result.toDataModel())
                 } else {
                     _invalidGameId.value = true
-                    // TODO: correct tag para los logs
-                    Log.e("MYTAG", "GAME INFO WAS NULL! INVALID GAME ID!")
+                    Log.e(TAG, "GAME INFO WAS NULL! INVALID GAME ID!")
                 }
             }
             joinGame(gameId)
@@ -145,5 +140,9 @@ class GameViewModel @Inject constructor(
         } else {
             game.value?.player1
         }
+    }
+
+    companion object {
+        private val TAG = GameViewModel::class.qualifiedName
     }
 }
