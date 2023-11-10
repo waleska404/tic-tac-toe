@@ -71,8 +71,8 @@ fun GameScreen(
 
     //TODO: empate view
 
-    if(invalidGameID) {
-        InvalidGameIDDialog()
+    if (invalidGameID) {
+        InvalidGameIDDialog(navigateToHome)
     }
 
     if (winner != null) {
@@ -90,19 +90,32 @@ fun GameScreen(
 }
 
 @Composable
-fun InvalidGameIDDialog() {
+fun InvalidGameIDDialog(
+    navigateToHome: () -> Unit,
+) {
     AlertDialog(
-        onDismissRequest = { /*TODO*/ },
+        onDismissRequest = { },
         confirmButton = {
             TextButton(
-                onClick = { /*TODO*/ },
+                modifier = Modifier.fillMaxWidth(),
+                onClick = { navigateToHome() },
+                colors = ButtonDefaults.textButtonColors(
+                    contentColor = PrimaryGrey,
+                    containerColor = SecondaryGrey
+                )
             ) {
-                Text(text = "confirm button")
+                Text(text = stringResource(id = R.string.go_to_home_screen))
             }
         },
-        title = { Text(text = "invalid game id") },
-        text = { Text(text = "return home") },
-        )
+        title = {
+            Text(
+                text = stringResource(id = R.string.invalid_game_id),
+                modifier = Modifier.fillMaxWidth()
+            )
+
+        },
+        containerColor = PrimaryGrey
+    )
 }
 
 @Composable
