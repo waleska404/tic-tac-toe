@@ -36,6 +36,8 @@ class GameViewModel @Inject constructor(
         }
     }
 
+    //TODO: solucionar lo de el playertype 0 al principio
+
     private fun joinGameAsGuest(gameId: String) {
         viewModelScope.launch {
             firebaseService.joinToGame(gameId).take(1).collect { gameInfo ->
@@ -55,7 +57,10 @@ class GameViewModel @Inject constructor(
     private fun joinGame(gameId: String) {
         viewModelScope.launch {
             firebaseService.joinToGame(gameId).collect { gameInfo ->
-                val result = gameInfo?.copy(isGameReady = gameInfo.player2 != null, isMyTurn = isMyTurn(gameInfo.playerTurn))
+                val result = gameInfo?.copy(
+                    isGameReady = gameInfo.player2 != null,
+                    isMyTurn = isMyTurn(gameInfo.playerTurn)
+                )
                 _game.value = result
                 verifyWinner()
             }
@@ -68,9 +73,12 @@ class GameViewModel @Inject constructor(
 
     fun onCellClicked(position: Int) {
         val currentGame = _game.value ?: return
-        if(currentGame.isGameReady && currentGame.board[position] == PlayerType.Empty && isMyTurn(currentGame.playerTurn)) {
+        if (currentGame.isGameReady && currentGame.board[position] == PlayerType.Empty && isMyTurn(
+                currentGame.playerTurn
+            )
+        ) {
             val newBoard = currentGame.board.toMutableList()
-            newBoard[position] = getPlayerType()
+            newBoard[position] = getMyPlayerType()
             viewModelScope.launch {
                 firebaseService.updateGame(
                     currentGame.copy(
@@ -89,6 +97,7 @@ class GameViewModel @Inject constructor(
                 playerWon(board, PlayerType.FirstPlayer) -> {
                     _winner.value = PlayerType.FirstPlayer
                 }
+
                 playerWon(board, PlayerType.SecondPlayer) -> {
                     _winner.value = PlayerType.SecondPlayer
                 }
@@ -116,7 +125,7 @@ class GameViewModel @Inject constructor(
         }
     }
 
-    private fun getPlayerType(): PlayerType {
+    fun getMyPlayerType(): PlayerType {
         return when {
             (game.value?.player1?.userId == userId) -> PlayerType.FirstPlayer
             (game.value?.player2?.userId == userId) -> PlayerType.SecondPlayer

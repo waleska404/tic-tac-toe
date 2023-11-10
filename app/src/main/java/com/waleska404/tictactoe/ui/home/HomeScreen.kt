@@ -11,12 +11,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults.cardColors
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Switch
@@ -57,18 +52,20 @@ fun HomeScreen(
             .fillMaxSize()
             .background(color = Background)
     ) {
+        Spacer(modifier = Modifier.weight(0.2f))
         Header()
+        Spacer(modifier = Modifier.weight(0.2f))
         Body(
             onCreateGame = { homeViewModel.onCreateGame(navigateToGame) },
             onJoinGame = { gameId -> homeViewModel.onJoinGame(gameId, navigateToGame) }
         )
+        Spacer(modifier = Modifier.weight(0.6f))
     }
 }
 
 @Composable
 fun Header() {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
-        Spacer(modifier = Modifier.height(50.dp))
         // logo
         Box(
             modifier = Modifier
@@ -100,40 +97,28 @@ fun Body(
     onCreateGame: () -> Unit,
     onJoinGame: (String) -> Unit,
 ) {
-    Spacer(modifier = Modifier.height(50.dp))
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .wrapContentHeight()
-            .padding(24.dp),
-        colors = cardColors(
-            containerColor = Background,
-        ),
+    Column(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Column(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            var createGame by remember { mutableStateOf(true) }
-            Switch(
-                checked = createGame,
-                onCheckedChange = { createGame = it },
-                colors = SwitchDefaults.colors(
-                    checkedThumbColor = SecondaryGrey,
-                    checkedTrackColor = PrimaryGrey,
-                    uncheckedThumbColor = SecondaryGrey,
-                    uncheckedTrackColor = PrimaryGrey,
-                    uncheckedBorderColor = Color.Transparent
-                ),
-            )
-            Spacer(modifier = Modifier.height(24.dp))
-            AnimatedContent(targetState = createGame, label = "") {
-                when(it) {
-                    true -> CreateGame(onCreateGame)
-                    false -> JoinGame(onJoinGame)
-                }
+        var createGame by remember { mutableStateOf(true) }
+        Switch(
+            checked = createGame,
+            onCheckedChange = { createGame = it },
+            colors = SwitchDefaults.colors(
+                checkedThumbColor = SecondaryGrey,
+                checkedTrackColor = PrimaryGrey,
+                uncheckedThumbColor = SecondaryGrey,
+                uncheckedTrackColor = PrimaryGrey,
+                uncheckedBorderColor = Color.Transparent
+            ),
+        )
+        Spacer(modifier = Modifier.height(24.dp))
+        AnimatedContent(targetState = createGame, label = "") {
+            when (it) {
+                true -> CreateGame(onCreateGame)
+                false -> JoinGame(onJoinGame)
             }
-            Spacer(modifier = Modifier.height(24.dp))
         }
     }
 }
@@ -171,19 +156,11 @@ fun JoinGame(
             )
         )
         Spacer(modifier = Modifier.height(8.dp))
-        Button(
+        TicTacPrimaryButton(
             onClick = { onJoinGame(text) },
+            text = stringResource(id = R.string.join_game),
             enabled = text.isNotEmpty(),
-            colors = ButtonDefaults.buttonColors(
-                containerColor = PrimaryGrey,
-                disabledContainerColor = PrimaryGrey
-            )
-        ) {
-            Text(
-                text = stringResource(id = R.string.join_game),
-                color = if(text.isNotEmpty()) PrimaryBlack else LightGrey,
-                fontSize = 18.sp
-            )
-        }
+            textColor = if (text.isNotEmpty()) PrimaryBlack else LightGrey,
+        )
     }
 }

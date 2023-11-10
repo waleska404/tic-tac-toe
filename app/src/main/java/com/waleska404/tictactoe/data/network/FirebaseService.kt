@@ -30,7 +30,7 @@ class FirebaseService @Inject constructor(
     }
 
     fun updateGame(gameData: GameData) {
-        if(gameData.gameId != null) {
+        if (gameData.gameId != null) {
             reference.child(PATH).child(gameData.gameId).setValue(gameData)
         }
     }

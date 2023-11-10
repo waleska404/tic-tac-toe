@@ -1,6 +1,5 @@
 package com.waleska404.tictactoe.ui.home
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.waleska404.tictactoe.data.network.FirebaseService
@@ -29,12 +28,14 @@ class HomeViewModel @Inject constructor(
 
     fun onJoinGame(gameId: String, navigateToGame: (String, String, Boolean) -> Unit) {
         val owner = false
+        navigateToGame(gameId, createUserId(), owner)
+        /*
         if (validGameId(gameId)) {
             navigateToGame(gameId, createUserId(), owner)
         } else {
             //TODO: show error invalid game id
             Log.i("MYTAG HOME VIEW MODEL", "INVALID GAME ID")
-        }
+        }*/
     }
 
     private fun validGameId(gameId: String): Boolean {

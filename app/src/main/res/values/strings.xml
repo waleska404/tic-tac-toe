@@ -12,5 +12,7 @@
     <string name="copied_to_clipboard">Copied to clipboard</string>
     <string name="your_turn">Your Turn</string>
     <string name="opponents_turn">Opponent\'s Turn</string>
-    <string name="waiting_player_2">Waiting for player 2</string>
+    <string name="waiting_player_2">Waiting for Player 2</string>
+    <string name="copy_content_description">copy to clipboard icon</string>
+    <string name="info_content_description">info icon</string>
 </resources>
