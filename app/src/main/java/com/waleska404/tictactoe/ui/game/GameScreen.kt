@@ -21,8 +21,6 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -33,6 +31,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.ClipboardManager
 import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.platform.LocalContext
@@ -126,56 +125,56 @@ fun WinnerView(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Background),
+            .background(Background)
+            .padding(24.dp),
         contentAlignment = Alignment.Center,
     ) {
-        Card(
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentHeight()
+                .clip(RoundedCornerShape(16.dp))
+                .background(PrimaryGrey)
                 .padding(24.dp),
-            colors = CardDefaults.cardColors(
-                containerColor = PrimaryGrey,
-            )
         ) {
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.padding(24.dp)
-            ) {
-                val congratulationsText = if(winner == PlayerType.Empty) {
-                    stringResource(id = R.string.draw)
+            val congratulationsText = if (winner == PlayerType.Empty) {
+                stringResource(id = R.string.draw)
+            } else {
+                stringResource(id = R.string.congratulations)
+            }
+            Text(
+                text = congratulationsText,
+                color = PrimaryBlack,
+                fontSize = 28.sp,
+                fontWeight = FontWeight.Bold
+            )
+            if (winner != PlayerType.Empty) {
+                Spacer(modifier = Modifier.height(8.dp))
+                val currentWinner = if (winner == PlayerType.FirstPlayer) {
+                    stringResource(id = R.string.player_1)
                 } else {
-                    stringResource(id = R.string.congratulations)
+                    stringResource(id = R.string.player_2)
                 }
                 Text(
-                    text = congratulationsText,
+                    text = stringResource(id = R.string.winner_is),
+                    fontSize = 22.sp,
+                    color = PrimaryBlack
+                )
+                Spacer(modifier = Modifier.height(2.dp))
+                Text(
+                    text = currentWinner,
+                    fontSize = 26.sp,
                     color = PrimaryBlack,
-                    fontSize = 28.sp,
                     fontWeight = FontWeight.Bold
                 )
-                if(winner != PlayerType.Empty) {
-                    Spacer(modifier = Modifier.height(8.dp))
-                    val currentWinner = if (winner == PlayerType.FirstPlayer) {
-                        stringResource(id = R.string.player_1)
-                    } else {
-                        stringResource(id = R.string.player_2)
-                    }
-                    Text(
-                        text = stringResource(id = R.string.winner_is),
-                        fontSize = 22.sp,
-                        color = PrimaryBlack
-                    )
-                    Spacer(modifier = Modifier.height(2.dp))
-                    Text(
-                        text = currentWinner,
-                        fontSize = 26.sp,
-                        color = PrimaryBlack,
-                        fontWeight = FontWeight.Bold
-                    )
-                }
-                Spacer(modifier = Modifier.height(32.dp))
-                TicTacPrimaryButton(onClick = { navigateToHome() }, text = stringResource(id = R.string.go_to_home_screen))
             }
+            Spacer(modifier = Modifier.height(32.dp))
+            TicTacPrimaryButton(
+                onClick = { navigateToHome() },
+                text = stringResource(id = R.string.go_to_home_screen),
+                backgroundColor = Background
+            )
         }
     }
 }

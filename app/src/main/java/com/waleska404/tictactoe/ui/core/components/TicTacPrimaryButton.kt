@@ -15,12 +15,14 @@ fun TicTacPrimaryButton(
     text: String,
     enabled: Boolean = true,
     textColor: Color = PrimaryBlack,
+    backgroundColor: Color = PrimaryGrey,
+    disabledBackgroundColor: Color = PrimaryGrey,
 ) {
     Button(
         onClick = { onClick() },
         colors = ButtonDefaults.buttonColors(
-            containerColor = PrimaryGrey,
-            disabledContainerColor = PrimaryGrey,
+            containerColor = backgroundColor,
+            disabledContainerColor = disabledBackgroundColor,
         ),
         enabled = enabled,
     ) {
