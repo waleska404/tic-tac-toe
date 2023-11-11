@@ -1,2 +1,2 @@
-# Tic Tac Toe remote game for Android devices using Firebase Realtime Database
+# Tic Tac Toe using Firebase Realtime Database
 ![](./tictactoe-demo.gif)
