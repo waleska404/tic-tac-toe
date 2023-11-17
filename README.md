@@ -35,7 +35,6 @@ A Tic Tac Toe game Android app for playing in real time with two devices. Using 
 
 ## Future Features (Contributions are welcome!)
 - Game history.
-- Personalized screen when someone wins.
 
 ## Find this repository useful? :heart:
 Support it by joining __[stargazers](https://github.com/waleska404/tic-tac-toe/stargazers)__ for this repository. :star: <br>
