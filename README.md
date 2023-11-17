@@ -32,6 +32,7 @@ A Tic Tac Toe game Android app for playing in real time with two devices. Using 
 ## Features
 - Create game and copy the game ID to share it.
 - Join a game with the game ID.
+- Play the game.
 
 ## Future Features (Contributions are welcome!)
 - Game history.
