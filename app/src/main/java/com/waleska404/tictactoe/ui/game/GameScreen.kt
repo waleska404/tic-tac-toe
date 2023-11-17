@@ -75,7 +75,8 @@ fun GameScreen(
     if (winner != null) {
         WinnerView(
             winner = winner,
-            navigateToHome = navigateToHome
+            navigateToHome = navigateToHome,
+            myPlayerTyoe = { gameViewModel.getMyPlayerType() }
         )
     } else {
         GameView(
@@ -120,6 +121,7 @@ fun InvalidGameIDDialog(
 fun WinnerView(
     winner: PlayerType?,
     navigateToHome: () -> Unit,
+    myPlayerTyoe: () -> PlayerType,
 ) {
     Box(
         modifier = Modifier
@@ -139,8 +141,10 @@ fun WinnerView(
         ) {
             val congratulationsText = if (winner == PlayerType.Empty) {
                 stringResource(id = R.string.draw)
-            } else {
+            } else if (winner == myPlayerTyoe()) {
                 stringResource(id = R.string.congratulations)
+            } else {
+                stringResource(id = R.string.you_lose)
             }
             Text(
                 text = congratulationsText,
