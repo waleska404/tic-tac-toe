@@ -1,6 +1,6 @@
 <h1 align="center">👾 Tic Tac Toe using Firebase Realtime Database</h1></br>
 <p align="center">  
-A Tic Tac Toe game Android app for playing in real time with two devices. Using Firebase, Compose and Hilt based on modern Android tech-stacks and MVVM architecture.
+A Tic Tac Toe game Android app for playing in real time with two devices. Using Firebase, Compose and Hilt based on modern Android tech-stack and MVVM architecture.
 </p>
 </br>
 
