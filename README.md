@@ -36,6 +36,12 @@ A Tic Tac Toe game Android app for playing in real time with two devices. Using 
 
 ## Future Features (Contributions are welcome!)
 - Game history.
+  
+## How to - Build guide
+For security reasons I have not added the `google-services.json` file. This file is responsible of setting the conection to the Firebase database. Here I explain how you can download your own `google-services.json` and how to use it. Needed if you want to download this Android project and build it.
+
+1. Login to firebase console and create a new project.
+   
 
 ## Find this repository useful? :heart:
 Support it by joining __[stargazers](https://github.com/waleska404/tic-tac-toe/stargazers)__ for this repository. :star: <br>
